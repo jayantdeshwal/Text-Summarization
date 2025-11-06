@@ -4,9 +4,7 @@ A Streamlit app built with LangChain, Groq LLM, and Unstructured/Youtube loaders
 
 🌐 Demo
 
-🚀 Try it live: (add your Streamlit Cloud URL here once deployed)
-
-Example: https://your-username-yt-summarizer.streamlit.app
+🚀 Try it live:https://text-summarization-bbptjrsutlnxx5najptvxd.streamlit.app/
 
 📽️ Overview
 
