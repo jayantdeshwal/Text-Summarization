@@ -55,7 +55,8 @@ if st.button("Summarize the Content from YT or Website"):
                             loader = YoutubeLoader.from_youtube_url(
                                 generic_url,
                                 add_video_info=False,
-                                language=["hi"]
+                                language=["hi"],
+                                proxies={"http": "http://proxy_ip:port", "https": "http://proxy_ip:port"}
                             )
                             docs = loader.load()
                         except Exception as e:
