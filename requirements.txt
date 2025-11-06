@@ -1,0 +1,10 @@
+streamlit
+langchain
+langchain-core
+langchain-community
+langchain-groq
+langchain-text-splitters
+validators
+youtube-transcript-api
+unstructured
+tiktoken
