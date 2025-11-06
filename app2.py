@@ -1,10 +1,9 @@
 import validators, streamlit as st
 from langchain_core.prompts import PromptTemplate
 from langchain_groq import ChatGroq
-from langchain_classic.chains import load_summarize_chain
+from langchain_classic.chains import load_summarize_chain, LLMChain
 from langchain_community.document_loaders import YoutubeLoader, UnstructuredURLLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_classic.chains import LLMChain
 
 ## Streamlit app
 st.set_page_config(page_title="LangChain: Summarize Text From YT or Website", page_icon="🦜")
@@ -43,16 +42,27 @@ if st.button("Summarize the Content from YT or Website"):
                 ## Load website or YouTube data
                 if "youtube.com" in generic_url or "youtu.be" in generic_url:
                     try:
+                        # Try English first
                         loader = YoutubeLoader.from_youtube_url(
                             generic_url,
                             add_video_info=False,
-                            language=["en", "hi"]  # English first, fallback to Hindi
+                            language=["en"]
                         )
                         docs = loader.load()
-                    except Exception as e:
-                        st.error(f"Could not retrieve a YouTube transcript: {e}")
-                        st.stop()
+                    except Exception:
+                        # Fallback to Hindi if English not found
+                        try:
+                            loader = YoutubeLoader.from_youtube_url(
+                                generic_url,
+                                add_video_info=False,
+                                language=["hi"]
+                            )
+                            docs = loader.load()
+                        except Exception as e:
+                            st.error(f"Could not retrieve a YouTube transcript: {e}")
+                            st.stop()
                 else:
+                    # Load website content
                     loader = UnstructuredURLLoader(
                         urls=[generic_url],
                         ssl_verify=False,
